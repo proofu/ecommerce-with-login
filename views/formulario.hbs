@@ -1,0 +1,57 @@
+<div class="jumbotron">
+  <!-- Formulario productos -->
+  <h1 style="color: blue">Ingrese datos</h1>
+  <br />
+  <form>
+    <div class="form-group">
+      <label for="name"><b>Nombre</b></label>
+      <input id="name" class="form-control" type="text" name="name" />
+    </div>
+    <div class="form-group">
+      <label for="price"><b>Precio</b></label>
+      <input id="price" class="form-control" type="number" name="price" />
+    </div>
+    <div class="form-group">
+      <label for="thumbnail"><b>Foto</b></label>
+      <input id="thumbnail" class="form-control" type="text" name="thumbnail" />
+    </div>
+    <button class="btn btn-success mt-3 mb-5" onclick="enviarProducto()">Enviar</button>
+  </form>
+  <!-- Final Formulario productos -->
+</div>
+<div class="container mt-3">
+  <!-- Tabla -->
+  <div>
+    {{#if DB_PRODUCTOS}}
+    <h2 style="color: crimson">Historial</h2>
+    <div class="table-responsive">
+      <table class="table table-dark" id="historial-almacenado">
+        
+      </table>      
+    </div>
+    {{else}}
+    <h3 class="class="alert alert-warning"">No se encontraron productos</h3>
+    {{/if}}
+  </div>
+
+  {{!-- Chat --}}
+  <div class="container m-5">
+        <h3>Centro de mensajes</h3>
+        <form>
+            <div class="form-group">
+                <label for="user">Email:</label>
+                <input type="text" class="form-control" id="user" aria-describedby="userComment">
+                <small id="userComment" class="form-text text-muted">Usuario que se utilizará al enviar mensajes.</small>
+            </div>
+            <div class="form-group">
+                <label for="contenidoMensaje">Mensaje:</label>
+                <textarea class="form-control" id="contenidoMensaje" rows="3"></textarea>
+            </div>    
+            <button class="btn btn-success" onclick="enviarMensaje()">Enviar</button>
+        </form>
+        <hr>
+        <div id="historial">
+            {{!-- mensajes recibidos --}}
+        </div>
+    </div>
+</div>

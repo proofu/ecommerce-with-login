@@ -1,0 +1,41 @@
+<div>
+  <h4>Argumentos</h4>
+  {{#each argsSliced}}
+    <div class="arg">
+      {{@key}}
+      :
+      {{this}}
+    </div>
+  {{/each}}
+  <br />
+  <div>
+    <h4>Path de ejecución</h4>
+    {{pathArg}}
+  </div>
+  <br />
+  <div>
+    <h4>Sistema operativo</h4>
+    {{so}}
+  </div>
+  <br />
+  <div>
+    <h4>ID de proceso</h4>
+    {{processID}}
+  </div>
+  <br />
+  <div>
+    <h4>Version de Node.js</h4>
+    {{version}}
+  </div>
+  <br />
+  <div>
+    <h4>Carpeta del proyecto</h4>
+    {{pathProject}}
+  </div>
+  <br />
+  <div>
+    <h4>Memoria total reservada (RSS)</h4>
+    {{memoriaRSS}}
+  </div>
+  <br />
+</div>

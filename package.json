@@ -1,0 +1,34 @@
+{
+  "type": "module",
+  "name": "clase-12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "node src/batch/createTables.js && node src/batch/createTablesMensajes.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "better-sqlite3": "^7.6.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "knex": "^2.3.0",
+    "minimist": "^1.2.7",
+    "mongoose": "^6.7.0",
+    "mysql": "^2.18.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "morgan": "^1.10.0"
+  }
+}

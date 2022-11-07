@@ -1,0 +1,17 @@
+[
+  {
+    "author": "Juan",
+    "text": "¡Hola! ¿Que tal?",
+    "timestamp": "31/8/2022, 18:43:26"
+  },
+  {
+    "author": "Pedro",
+    "text": "¡Muy bien! ¿Y vos?",
+    "timestamp": "31/8/2022, 18:43:26"
+  },
+  {
+    "author": "Ana",
+    "text": "¡Genial!",
+    "timestamp": "31/8/2022, 18:43:26"
+  }
+]
