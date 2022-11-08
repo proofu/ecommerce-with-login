@@ -1,2 +1,2 @@
-# desafio-clase-28
-Desafio entregable de la clase 28 del curso de backend de Coder House
+# desafio-clase-30
+Desafio entregable de la clase 30 del curso de backend de Coder House
