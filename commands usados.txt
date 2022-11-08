@@ -1,0 +1,7 @@
+
+node server.js 8081 CLUSTER
+node server.js 8081 FORK
+forever start server.js 8081 CLUSTER
+forever start server.js 8081 FORK
+pm2 start server.js 8081 CLUSTER
+pm2 start server.js 8081 FORK

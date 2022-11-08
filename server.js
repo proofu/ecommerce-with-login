@@ -15,11 +15,10 @@ import { Strategy } from "passport-local";
 const LocalStrategy = Strategy;
 import session from "express-session";
 import UsuariosDaoMongoDB from "./src/DAOs/usuarios/usuariosDaoMongoDB.js";
-const usuariosApi = new UsuariosDaoMongoDB;
-import minimist from "minimist"
-
-
-
+const usuariosApi = new UsuariosDaoMongoDB();
+import minimist from "minimist";
+import cluster from "cluster";
+import os from "os";
 
 /* __________________ INSTANCIA DE SERVER */
 const app = express();
@@ -61,7 +60,7 @@ passport.serializeUser((usuario, done) => {
 });
 
 passport.deserializeUser((nombre, done) => {
-  const existeUsuario = usuariosApi.findOneByName(nombre);;
+  const existeUsuario = usuariosApi.findOneByName(nombre);
   done(null, existeUsuario);
 });
 
@@ -95,16 +94,16 @@ async function verifyPass(usuario, password) {
 }
 
 function isAuth(req, res, next) {
-  if(req.isAuthenticated()){
-      next()
+  if (req.isAuthenticated()) {
+    next();
   } else {
-      res.redirect('/login')
+    res.redirect("/login");
   }
 }
 
 /* __________________ MINIMIST */
 
-let options = { default: {PORT: 8080}};
+let options = { default: { PORT: 8080 } };
 let argsSliced = minimist(process.argv.slice(2), options);
 let args = minimist(process.argv, options);
 let pathArg = args._[0];
@@ -115,7 +114,6 @@ let so = process.platform;
 let processID = process.pid;
 let version = process.version;
 let memoriaRSS = process.memoryUsage().rss;
-
 
 /* __________________ MOTOR DE PLANTILLAS */
 app.set("views", "./views");
@@ -168,7 +166,7 @@ app.post(
 );
 app.get("/login-error", (req, res) => {
   res.render("login-error");
-}); 
+});
 
 app.get("/register", (req, res) => {
   res.render("register");
@@ -192,17 +190,46 @@ app.post("/register", async (req, res) => {
   }
 });
 app.get("/info", (req, res) => {
-  res.render("info", {argsSliced, pathArg, so, processID, version, pathProject, memoriaRSS});
+  res.render("info", {
+    argsSliced,
+    pathArg,
+    so,
+    processID,
+    version,
+    pathProject,
+    memoriaRSS,
+  });
 });
 
 /* __________________ SERVIDOR */
-const PORT = process.env.PORT;
-const server = httpServer.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
-server.on("error", (err) => {
-  console.log(`error en el server: ${err}`);
-});
+/* __________________ CLUSTER */
+const CPU_CORES = os.cpus().length;
+const serverMode = parseInt(process.argv[3] || "FORK")
+if (cluster.isPrimary && serverMode == "CLUSTER") {
+  console.log("Cant de cores: ", CPU_CORES);
+
+  for (let i = 0; i < CPU_CORES; i++) {
+    cluster.fork();
+  }
+
+  cluster.on("exit", (worker) => {
+    console.log(
+      `Worker ${process.pid} ${worker.id} ${
+        worker.pid
+      } finalizo ${new Date().toLocaleString()}`
+    );
+    cluster.fork();
+  });
+} else {
+  const PORT = parseInt(process.argv[2]) || 8080;
+  const server = httpServer.listen(PORT, () => {
+    console.log(`listening on ${PORT}`);
+  });
+  server.on("error", (err) => {
+    console.log(`error en el server: ${err}`);
+  });
+}
+
 
 /* __________________ WEB-SOCKET */
 io.on("connection", (socket) => {
